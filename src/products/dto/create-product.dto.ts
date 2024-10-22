@@ -29,12 +29,19 @@ export class CreateProductDto {
     @IsArray({ message: "sizes requiere que sea un array" })
     sizes: String[]
 
-    @IsIn(['men', 'women', 'kids', 'unisex'], { message: 'gender debe ser uno de los valores permitidos men,women,kids o unisex' })
+    @IsIn(['men', 'women', 'kid', 'unisex'], { message: 'gender debe ser uno de los valores permitidos men,women,kids o unisex' })
     gender: string;
 
     @IsString({ each: true, message: "Todos los valores deben de ser strings" })
     @IsArray({ message: "tags requiere ser un array" })
     @IsOptional()
     tags: string[]
+
+    @IsString({ each: true, message: "Todos los valores deben de ser strings" })
+    @IsArray({ message: "tags requiere ser un array" })
+    @IsOptional()
+    images: string[]
+
+
 
 }
