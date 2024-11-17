@@ -3,10 +3,6 @@ import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
-import { FileInterceptor } from '@nestjs/platform-express/multer';
-import { MaxFileSizeValidator } from '@nestjs/common/pipes/file/max-file-size.validator';
-import { FileTypeValidator } from '@nestjs/common/pipes/file/file-type.validator';
-
 
 @Controller('products')
 export class ProductsController {
