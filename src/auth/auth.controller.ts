@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, UseGuards, Req, Headers } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Headers } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto, LoginUserDto } from './dto';
 import { AuthGuard } from '@nestjs/passport';
-import { GetUSer } from './decorators/get-user.decorator';
-import { User } from './entities/auth.entity';
-import { RowHeaders } from '../common/decorators/row-headers.decorator';
+import { User } from './entities/user.entity';
+import { UserRoleGuard } from './guards/user-role/user-role.guard';
+import { ValidRoles } from './interfaces';
+import { GetUSer, RowHeaders, RoleProtected, Auth } from './decorators';
 
 
 @Controller('auth')
@@ -28,10 +29,10 @@ export class AuthController {
     @GetUSer() user: User,
     @GetUSer('email') userMail: User,
     @RowHeaders('authorization') authorizationToken: string[],
-    @Headers() head:ParameterDecorator
+    @Headers() head: ParameterDecorator
   ) {
     //console.log(request.user)
-    
+
     return {
       ok: true,
       message: 'Hola mundo privado',
@@ -40,6 +41,26 @@ export class AuthController {
       authorizationToken,
       head
     };
+  }
+
+  @Get("private2")
+  // @SetMetadata('roles',['admin','superuser'])
+  @RoleProtected(ValidRoles.admin, ValidRoles.superUser)
+  @UseGuards(AuthGuard(), UserRoleGuard)
+  testInPrivateRoute2(
+    @GetUSer() user: User
+  ) {
+
+    return "ruta2";
+  }
+
+  @Get("private3")
+  @Auth(ValidRoles.user )
+  testInPrivateRoute3(
+    @GetUSer() user: User
+  ) {
+
+    return "ruta2";
   }
 
 }

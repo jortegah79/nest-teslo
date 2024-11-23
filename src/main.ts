@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
-import { provideComponentInputBinding } from '@ionic/angular/common';
 
 async function bootstrap() {
   

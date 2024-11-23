@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { User } from './entities/auth.entity';
+import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { LoginUserDto, CreateUserDto } from './dto';
