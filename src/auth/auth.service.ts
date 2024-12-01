@@ -57,7 +57,7 @@ export class AuthService {
 
     const user = await this.userRepository.findOne({
       where: { email },
-      select: { email: true, password: true ,id:true}
+      select: { email: true, password: true, id: true }
     });
 
     if (!user) {
@@ -69,13 +69,36 @@ export class AuthService {
     }
 
     //JWT
-    return this.getJwtPayload({
+    const token= this.getJwtPayload({
       email: user.email,
       id: user.id
     });
+    return {
+      "id":       user.id,
+      "email":    user.email,
+      "fullname": user.fullname,
+      "token":    token
+    };
 
-    return user;
+    
 
+  }
+
+  public async checkAuthStatus(id: string) {
+
+    const user = await this.userRepository.findOne(
+      { where: { id } }
+    );
+    const token = this.getJwtPayload({
+      email: user.email,
+      id: user.id
+    });
+    return {
+      "id":       user.id,
+      "email":    user.email,
+      "fullname": user.fullname,
+      "token":    token
+    };
   }
   private getJwtPayload(payload: JwtPayload) {
     const token = this.jwtService.sign(payload);
